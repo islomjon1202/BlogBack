@@ -19,8 +19,10 @@ app.get("/", async(req, res)=>{
 })
 
 const Products = require("./router/product")
+const Images = require("./router/image")
 
 app.use("/products", Products)
+app.use("/images", Images)
 
 
 const PORT = process.env.PORT || 6000

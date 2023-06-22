@@ -1,14 +1,13 @@
 const express = require("express");
-const { Products, validateProduct } = require("../models/productSchema");
+const { Images, validateImage } = require("../models/imageSchema");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const products = await Products.find();
+    const images = await Images.find();
     res
       .status(200)
-      
-      .json({ state: true, msg: "found", innerData: products });
+      .json({ state: true, msg: "found", innerData: images });
   } catch {
     res
       .status(500)
@@ -16,22 +15,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-          
-router.post("/cards",  async (req, res) => {
+
+router.post("/banner",  async (req, res) => {
   try {
-    let { error } = validateProduct(req.body);
+    let { error } = validateImage(req.body);
     if (error) {
       return res
         .status(400)
         .json({ state: false, msg: error.details[0].message, innerData: null });
     }
-    let { title, button, author, img, desc } = req.body;
-    let newPro = await Products.create({
-      title,
-      button,
-      img,
-      author,
-      desc
+    let { img } = req.body;
+    let newPro = await Images.create({
+      img
     });
     let savePro = await newPro.save();
     res.status(201).json({ state: true, msg: "saqlandi", innerData: savePro });
@@ -45,7 +40,7 @@ router.post("/cards",  async (req, res) => {
 router.delete("/:proID",  async (req, res) => {
   try {
     let id = req.params.proID;
-    let delPro = await Products.findByIdAndRemove(id);
+    let delPro = await Images.findByIdAndRemove(id);
     res.status(201).json({ state: true, msg: "deleted", innerData: delPro });
   } catch {
     res
