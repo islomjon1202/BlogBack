@@ -18,11 +18,9 @@ app.get("/", async(req, res)=>{
     res.json("App is running")
 })
 
-const Products = require("./router/product")
-const Images = require("./router/image")
+const Blog = require("./router/blog")
 
-app.use("/products", Products)
-app.use("/images", Images)
+app.use("/blog", Blog)
 
 
 const PORT = process.env.PORT || 6000
